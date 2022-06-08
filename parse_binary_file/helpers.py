@@ -2,22 +2,20 @@ import io
 
 
 def read_until(
-    stream: io.RawIOBase,
-    start: int = 0,
+    stream: io.IOBase,
     terminator: bytes = b'\x00',
-    with_terminator: bool = False
+    with_terminator: bool = True
 ) -> bytes:
     """
     Read stream until terminator or end of stream.
 
     :param stream: Stream to read.
-    :param start
     :param terminator: Termination string. [Default: b'\x00']
-    :param with_terminator: Return value with the terminator string. [Default: False]
+    :param with_terminator: Return value with the terminator string.
+        [Default: True]
     :returns bytes: Byte string.
     """
     word = b''
-    i = start
     while True:
         c = stream.read(1)
         if c is None:
@@ -30,7 +28,5 @@ def read_until(
                 word = word[:-len(terminator)]
 
             break
-
-        i += 1
 
     return word
